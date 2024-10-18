@@ -1,8 +1,10 @@
 package br.ufpb.mangatoonapi.model;
 
+import br.ufpb.mangatoonapi.model.enums.UserType;
 import jakarta.persistence.*;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "tb_user")
@@ -16,7 +18,8 @@ public class User {
 
     private String email;
 
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private UserType type;
 
     private String username;
 
@@ -26,18 +29,18 @@ public class User {
     @JoinTable(name = "user_favorite_mangas",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "manga_id"))
-    private Collection<Manga> favoriteMangas;
+    private Collection<Manga> favoriteMangas = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "userMangaCollections_manga",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "mangaCollection_id"))
-    private Collection<MangaCollection> mangaCollections;
+    private Collection<MangaCollection> mangaCollections = new HashSet<>();
 
     public User() {
     }
 
-    public User(Long id, String name, String email, String type, String username, String password, Collection<Manga> favoriteMangas, Collection<MangaCollection> mangaCollections) {
+    public User(Long id, String name, String email, UserType type, String username, String password, Collection<Manga> favoriteMangas, Collection<MangaCollection> mangaCollections) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -72,11 +75,11 @@ public class User {
         this.email = email;
     }
 
-    public String getType() {
+    public UserType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(UserType type) {
         this.type = type;
     }
 

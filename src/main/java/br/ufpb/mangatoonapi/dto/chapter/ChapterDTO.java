@@ -1,12 +1,7 @@
-package br.ufpb.mangatoonapi.model;
+package br.ufpb.mangatoonapi.dto.chapter;
 
-import jakarta.persistence.*;
+public class ChapterDTO {
 
-@Entity
-public class Chapter {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
@@ -17,20 +12,18 @@ public class Chapter {
 
     private String urlImage;
 
-    @ManyToOne
-    @JoinColumn(name = "manga_id")
-    private Manga manga;
+    private Long mangaId;
 
-    public Chapter() {
+    public ChapterDTO() {
     }
 
-    public Chapter(Long id, String name, int numberChapter, String description, String urlImage, Manga manga) {
+    public ChapterDTO(Long id, String name, int numberChapter, String description, String urlImage, Long mangaId) {
         this.id = id;
         this.name = name;
         this.numberChapter = numberChapter;
         this.description = description;
         this.urlImage = urlImage;
-        this.manga = manga;
+        this.mangaId = mangaId;
     }
 
     public Long getId() {
@@ -73,11 +66,11 @@ public class Chapter {
         this.urlImage = urlImage;
     }
 
-    public Manga getManga() {
-        return manga;
+    public Long getMangaId() {
+        return mangaId;
     }
 
-    public void setManga(Manga manga) {
-        this.manga = manga;
+    public void setMangaId(Long mangaId) {
+        this.mangaId = mangaId;
     }
 }

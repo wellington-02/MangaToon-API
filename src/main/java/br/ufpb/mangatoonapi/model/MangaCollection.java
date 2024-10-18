@@ -3,6 +3,7 @@ package br.ufpb.mangatoonapi.model;
 import jakarta.persistence.*;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
 public class MangaCollection {
@@ -14,10 +15,10 @@ public class MangaCollection {
     private String name;
 
     @ManyToMany(mappedBy = "mangaCollections")
-    private Collection<Manga> mangas;
+    private Collection<Manga> mangas = new HashSet<>();
 
     @ManyToMany(mappedBy = "mangaCollections")
-    private Collection<User> users;
+    private Collection<User> users = new HashSet<>();
 
     public MangaCollection() {
     }

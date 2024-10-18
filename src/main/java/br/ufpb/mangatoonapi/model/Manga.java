@@ -3,6 +3,7 @@ package br.ufpb.mangatoonapi.model;
 import jakarta.persistence.*;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
 public class Manga {
@@ -22,27 +23,26 @@ public class Manga {
     @OneToMany(mappedBy = "manga")
     private Collection<Chapter> chapters;
 
-    @ManyToOne
-    @JoinColumn(name = "creator_user_id")
-    private User creator;
+    @ManyToMany(mappedBy = "favoriteMangas")
+    private Collection<User> usersWhoFavorited = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "mangaCollections_manga",
             joinColumns = @JoinColumn(name = "manga_id"),
             inverseJoinColumns = @JoinColumn(name = "mangaCollection_id"))
-    private Collection<MangaCollection> mangaCollections;
+    private Collection<MangaCollection> mangaCollections = new HashSet<>();
 
     public Manga() {
     }
 
-    public Manga(Long id, String name, String description, Float rating, String urlImage, Collection<Chapter> chapters, User creator, Collection<MangaCollection> mangaCollections) {
+    public Manga(Long id, String name, String description, Float rating, String urlImage, Collection<Chapter> chapters, Collection<User> usersWhoFavorited, Collection<MangaCollection> mangaCollections) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.rating = rating;
         this.urlImage = urlImage;
         this.chapters = chapters;
-        this.creator = creator;
+        this.usersWhoFavorited = usersWhoFavorited;
         this.mangaCollections = mangaCollections;
     }
 
@@ -94,12 +94,12 @@ public class Manga {
         this.chapters = chapters;
     }
 
-    public User getCreator() {
-        return creator;
+    public Collection<User> getUsersWhoFavorited() {
+        return usersWhoFavorited;
     }
 
-    public void setCreator(User creator) {
-        this.creator = creator;
+    public void setUsersWhoFavorited(Collection<User> usersWhoFavorited) {
+        this.usersWhoFavorited = usersWhoFavorited;
     }
 
     public Collection<MangaCollection> getMangaCollections() {
