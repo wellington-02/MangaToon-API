@@ -1,5 +1,6 @@
 package br.ufpb.mangatoonapi.util;
 
+import br.ufpb.mangatoonapi.dto.user.UserDTO;
 import br.ufpb.mangatoonapi.dto.user.UserFullDTO;
 import br.ufpb.mangatoonapi.model.Manga;
 import br.ufpb.mangatoonapi.model.MangaCollection;
@@ -32,5 +33,13 @@ public class UserCreator {
         List<Long> mangaCollectionsIds = new ArrayList<>();
 
         return new UserFullDTO(userId, name, email, type, username, password, favoriteMangasIds, mangaCollectionsIds);
+    }
+
+    public static UserDTO defaultUserDTO(){
+        int type = 1;
+        List<Long> favoriteMangasIds = new ArrayList<>();
+        List<Long> mangaCollectionsIds = new ArrayList<>();
+
+        return new UserDTO(userId, name, email, type,favoriteMangasIds, mangaCollectionsIds);
     }
 }

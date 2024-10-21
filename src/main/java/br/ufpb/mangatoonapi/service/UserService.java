@@ -11,6 +11,7 @@ import br.ufpb.mangatoonapi.model.enums.UserType;
 import br.ufpb.mangatoonapi.repository.MangaCollectionRepository;
 import br.ufpb.mangatoonapi.repository.MangaRepository;
 import br.ufpb.mangatoonapi.repository.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -26,12 +27,14 @@ public class UserService {
     private final MangaRepository mangaRepository;
     private final MangaCollectionRepository mangaCollectionRepository;
     private final UserMapper userMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserService(UserRepository userRepository, MangaRepository mangaRepository, MangaCollectionRepository mangaCollectionRepository, UserMapper userMapper) {
+    public UserService(UserRepository userRepository, MangaRepository mangaRepository, MangaCollectionRepository mangaCollectionRepository, UserMapper userMapper, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.mangaRepository = mangaRepository;
         this.mangaCollectionRepository = mangaCollectionRepository;
         this.userMapper = userMapper;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public List<UserDTO> listUsers() {
@@ -44,11 +47,12 @@ public class UserService {
                 orElseThrow(() -> new ObjectNotFoundException("User " + userId + " not found!")));
     }
 
-    public UserFullDTO createUser(UserFullDTO userFullDTO) {
-//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        User user = userRepository.save(userMapper.userFullToEntity(userFullDTO));
+    public UserDTO createUser(UserFullDTO userFullDTO) {
+        User user = userMapper.userFullToEntity(userFullDTO);
+        user.setPassword(bCryptPasswordEncoder.encode(userFullDTO.password()));
+        User userSaved = userRepository.save(user);
 
-        return userMapper.userFullToDTO(user);
+        return userMapper.toDTO(userSaved);
     }
 
     public UserDTO updateUser(Long userId, UserDTO userDTO) {

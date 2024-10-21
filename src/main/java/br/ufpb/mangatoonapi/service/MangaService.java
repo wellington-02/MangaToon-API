@@ -61,5 +61,4 @@ public class MangaService {
 
         mangaRepository.delete(m);
     }
-
 }
