@@ -37,7 +37,7 @@ public class ChapterController {
     }
 
     @PutMapping("/{chapterId}")
-    public ChapterDTO updateChapter(@PathVariable Long chapterId, @RequestBody ChapterDTO chapterDTO) {
+    public ChapterDTO updateChapter(@PathVariable Long chapterId, @Valid @RequestBody ChapterDTO chapterDTO) {
         return chapterService.updateChapter(chapterId, chapterDTO);
     }
 

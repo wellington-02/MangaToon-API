@@ -1,6 +1,7 @@
 package br.ufpb.mangatoonapi.controller;
 
 import br.ufpb.mangatoonapi.dto.user.UserDTO;
+import br.ufpb.mangatoonapi.dto.user.UserFullDTO;
 import br.ufpb.mangatoonapi.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -32,12 +33,12 @@ public class UserController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    UserDTO createUser(@Valid @RequestBody UserDTO userDTO) {
-        return userService.createUser(userDTO);
+    UserFullDTO createUser(@Valid @RequestBody UserFullDTO userFullDTO) {
+        return userService.createUser(userFullDTO);
     }
 
     @PatchMapping("/{userId}")
-    public UserDTO updateUser(@PathVariable Long userId, @RequestBody UserDTO userDTO) {
+    public UserDTO updateUser(@PathVariable Long userId, @Valid @RequestBody UserDTO userDTO) {
         return userService.updateUser(userId, userDTO);
     }
 

@@ -1,17 +1,23 @@
 package br.ufpb.mangatoonapi.dto.chapter;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class ChapterDTO {
 
     private Long id;
 
+    @NotBlank
     private String name;
 
+    @NotNull
     private int numberChapter;
 
     private String description;
 
     private String urlImage;
 
+    @NotNull
     private Long mangaId;
 
     public ChapterDTO() {

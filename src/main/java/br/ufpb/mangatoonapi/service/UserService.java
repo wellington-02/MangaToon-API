@@ -1,6 +1,7 @@
 package br.ufpb.mangatoonapi.service;
 
 import br.ufpb.mangatoonapi.dto.user.UserDTO;
+import br.ufpb.mangatoonapi.dto.user.UserFullDTO;
 import br.ufpb.mangatoonapi.dto.user.UserMapper;
 import br.ufpb.mangatoonapi.exception.ObjectNotFoundException;
 import br.ufpb.mangatoonapi.model.Manga;
@@ -43,11 +44,11 @@ public class UserService {
                 orElseThrow(() -> new ObjectNotFoundException("User " + userId + " not found!")));
     }
 
-    public UserDTO createUser(UserDTO userDTO) {
+    public UserFullDTO createUser(UserFullDTO userFullDTO) {
 //        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        User user = userRepository.save(userMapper.toEntity(userDTO));
+        User user = userRepository.save(userMapper.userFullToEntity(userFullDTO));
 
-        return userMapper.toDTO(user);
+        return userMapper.userFullToDTO(user);
     }
 
     public UserDTO updateUser(Long userId, UserDTO userDTO) {
@@ -80,9 +81,6 @@ public class UserService {
         if (userDTO.type() != null) {
             user.setType(UserType.fromId(userDTO.type()));
         }
-        if (userDTO.username() != null) {
-            user.setUsername(userDTO.username());
-        }
 
         return userMapper.toDTO(userRepository.save(user));
     }
@@ -93,5 +91,4 @@ public class UserService {
         userRepository.delete(u);
 
     }
-
 }

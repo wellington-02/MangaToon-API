@@ -37,7 +37,7 @@ public class MangaController {
     }
 
     @PatchMapping("/{mangaId}")
-    public MangaDTO updateManga(@PathVariable Long mangaId, @RequestBody MangaDTO mangaDTO) {
+    public MangaDTO updateManga(@PathVariable Long mangaId, @Valid @RequestBody MangaDTO mangaDTO) {
         return mangaService.updateManga(mangaId, mangaDTO);
     }
 

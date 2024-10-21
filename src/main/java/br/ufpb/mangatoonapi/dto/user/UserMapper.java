@@ -20,6 +20,10 @@ public interface UserMapper {
     @Mapping(target = "mangaCollections", ignore = true)
     User toEntity(UserDTO userDTO);
 
+    UserFullDTO userFullToDTO(User user);
+
+    User userFullToEntity(UserFullDTO userFullDTO);
+
     default Collection<Long> mapMangasToIds(Collection<Manga> mangas) {
         return mangas.stream().map(Manga::getId).collect(Collectors.toList());
     }
