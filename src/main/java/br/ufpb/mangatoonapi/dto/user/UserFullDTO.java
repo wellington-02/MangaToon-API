@@ -7,13 +7,14 @@ import jakarta.validation.constraints.Size;
 
 import java.util.Collection;
 
-public record UserFullDTO(Long id,
-                      @NotBlank String name,
-                      @NotBlank @Email String email,
-                      @NotNull Integer type,
-                      @NotBlank String username,
-                      @Size(min = 8, max = 40) @NotBlank String password,
-                      Collection<Long> favoriteMangasId,
-                      Collection<Long> mangaCollectionsId) {
+public record UserFullDTO(
+        Long id,
+        @NotBlank String name,
+        @NotBlank @Email String email,
+        @NotNull Integer type,
+        @NotBlank String username,
+        @Size(min = 8, max = 40) @NotBlank String password,
+        Collection<Long> favoriteMangasId,
+        Collection<Long> mangaCollectionsId) {
 }
 
